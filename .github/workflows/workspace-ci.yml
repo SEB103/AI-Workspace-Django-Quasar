@@ -1,0 +1,21 @@
+name: Claude Workspace CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate generic AI scaffold without a product checkout
+        run: python .claude/scripts/validate_workspace.py --strict
+      - name: Run workspace guard tests
+        run: python -m unittest discover -s .claude/tests -p 'test_*.py' -v
+      - name: Confirm ignored local folders are not tracked
+        run: |
+          python .claude/scripts/repo_audit.py --workspace-only

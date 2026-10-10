@@ -1,0 +1,35 @@
+# Universal stack profile, safe to track in Workspace Git.
+stack: django-quasar
+workspace:
+  product_root: project
+  backend_root: project/backend
+  frontend_root: project/frontend
+  project_scaffold: true
+backend:
+  language: python
+  framework: django
+  api: django-rest-framework
+  cms: wagtail
+  database: postgresql
+  content_delivery: headless-api-for-client-pages
+frontend:
+  language: typescript
+  framework: vue3
+  ui: quasar-cli-vite
+  rendering: undecided-spa-or-ssr
+api:
+  style: rest-json
+  prefix: /api/v1/
+  spec: openapi
+platform:
+  target: linux-vps
+  app_clients:
+    - web
+    - future-capacitor-mobile
+    - future-electron-desktop
+policy:
+  fictional_demo_data_only: true
+  single_practice_per_deployment: true
+  no_multitenancy_initially: true
+  no_real_patient_records_in_source_or_ci: true
+  production_deploy_requires_approval: true

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "canonical_root": ".claude/skills",
+  "total": 25,
+  "skills": [
+    {
+      "name": "api-contract",
+      "description": "Maintain OpenAPI as contract between independent Python backend and TypeScript frontend",
+      "invocation": "contextual"
+    },
+    {
+      "name": "architecture-adr",
+      "description": "Record significant architectural decisions in product or workspace ADRs",
+      "invocation": "contextual"
+    },
+    {
+      "name": "auth-permissions",
+      "description": "Plan and review patient/staff login authorization approval and session flows",
+      "invocation": "contextual"
+    },
+    {
+      "name": "demo-fixtures",
+      "description": "Create reproducible fictional demo practice users services and appointment fixtures",
+      "invocation": "contextual"
+    },
+    {
+      "name": "dependency-review",
+      "description": "Review Django Python Quasar npm and GitHub Actions dependencies and supply-chain risk",
+      "invocation": "contextual"
+    },
+    {
+      "name": "django-domain",
+      "description": "Implement Django domain models and services with transaction and migration discipline",
+      "invocation": "contextual"
+    },
+    {
+      "name": "django-rest-api",
+      "description": "Design and implement DRF resource endpoints with safe permissions and schema",
+      "invocation": "contextual"
+    },
+    {
+      "name": "docker-deployment",
+      "description": "Design Docker Compose local and VPS staging deployment for single-practice Django Quasar stack",
+      "invocation": "manual"
+    },
+    {
+      "name": "documentation",
+      "description": "Write concise product and workspace docs based on verified implementation",
+      "invocation": "contextual"
+    },
+    {
+      "name": "git-pr-workflow",
+      "description": "Prepare focused branch commit and pull request workflows for either independent repository",
+      "invocation": "manual"
+    },
+    {
+      "name": "github-actions",
+      "description": "Develop diagnose and optimize two-repo GitHub Actions CI workflows",
+      "invocation": "contextual"
+    },
+    {
+      "name": "plan-feature",
+      "description": "Plan nontrivial full-stack features and acceptance tests before implementation",
+      "invocation": "manual"
+    },
+    {
+      "name": "playwright-e2e",
+      "description": "Create browser E2E flows for booking login approvals and content publication",
+      "invocation": "contextual"
+    },
+    {
+      "name": "postgres-migrations",
+      "description": "Safely author review and test PostgreSQL Django migrations",
+      "invocation": "contextual"
+    },
+    {
+      "name": "quasar-vue",
+      "description": "Build accessible Vue 3 Quasar TypeScript pages and components consuming REST API",
+      "invocation": "contextual"
+    },
+    {
+      "name": "release-management",
+      "description": "Prepare release dry run version tag artifacts and GHCR without automatic publication",
+      "invocation": "manual"
+    },
+    {
+      "name": "review-changes",
+      "description": "Perform structured security architecture test and product-boundary code review of diffs",
+      "invocation": "manual"
+    },
+    {
+      "name": "security-privacy",
+      "description": "Audit application security and EU/German medical privacy by threat modeling and tests",
+      "invocation": "contextual"
+    },
+    {
+      "name": "systematic-debugging",
+      "description": "Investigate regressions in Django Quasar PostgreSQL CI or deployment with reproducible evidence",
+      "invocation": "contextual"
+    },
+    {
+      "name": "testing-strategy",
+      "description": "Design and execute Django pytest Quasar Vitest and cross-stack test gates",
+      "invocation": "contextual"
+    },
+    {
+      "name": "ticket-finish",
+      "description": "Close a local task after evidence-based tests, review and explicit outstanding risks",
+      "invocation": "manual"
+    },
+    {
+      "name": "ticket-start",
+      "description": "Create a local untracked task ticket and implementation checklist for Claude Code",
+      "invocation": "manual"
+    },
+    {
+      "name": "verification-before-completion",
+      "description": "Verify actual code edits with tests and show factual evidence before marking task complete",
+      "invocation": "manual"
+    },
+    {
+      "name": "wagtail-content",
+      "description": "Build Wagtail editorial models admin workflow and headless content API for Quasar",
+      "invocation": "contextual"
+    },
+    {
+      "name": "workspace-maintenance",
+      "description": "Safely improve portable Claude Code rules skills hooks templates and validation",
+      "invocation": "manual"
+    }
+  ]
+}

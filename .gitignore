@@ -1,0 +1,77 @@
+# ============================================================
+# Repository A: reusable Claude Code AI Workspace
+# Repository B (project/) is fully independent and never tracked here.
+# ============================================================
+
+# Never stage any Product content in Workspace Git
+/project/
+
+# Reference material: only README.md is part of the public Workspace
+/reference/**
+!/reference/README.md
+
+# Generated work: only documentation README.md files are tracked
+# Add subfolders freely: new generated content stays ignored by default.
+/generated/**
+!/generated/README.md
+!/generated/plans/
+!/generated/plans/README.md
+!/generated/tickets/
+!/generated/tickets/README.md
+!/generated/reports/
+!/generated/reports/README.md
+
+# Legacy local folders from v0.1.x, never commit their contents
+/task-context/
+/generated-docs/
+
+# Local project- and machine-specific settings
+/CLAUDE.local.md
+/.claude/project-profile.local.yaml
+/.claude/settings.local.json
+/.claude/local/
+
+# Runtime state / environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite3
+*.db
+*.log
+*.tmp
+*.bak
+*.swp
+
+# IDE machine-specific state (share only portable settings)
+/.vscode/*
+!/.vscode/settings.json
+!/.vscode/extensions.json
+.idea/
+
+# Claude Code transient worktrees/caches
+/.claude/worktrees/
+/.claude/cache/
+/.claude/logs/
+/.claude/sessions/
+/.claude/reports/
+
+# Python / Node transient files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+node_modules/
+dist/
+build/
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini

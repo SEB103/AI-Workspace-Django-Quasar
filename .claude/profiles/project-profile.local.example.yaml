@@ -1,0 +1,9 @@
+# Copy to .claude/project-profile.local.yaml (ignored) and customize per workspace.
+project_name: Medical Practice Platform
+product_repo_directory: project
+workspace_repo_remote: ""   # fill after registering GitHub repo
+product_repo_remote: ""     # fill after registering GitHub repo
+selected_stack_profile: .claude/profiles/django-quasar.example.yaml
+backend_python_version: undecided
+frontend_node_lts: undecided
+contact_email: ""  # avoid personal/secrets; use project-wide public email only if appropriate
