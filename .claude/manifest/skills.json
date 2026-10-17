@@ -1,16 +1,11 @@
 {
   "schema_version": 1,
   "canonical_root": ".claude/skills",
-  "total": 25,
+  "total": 20,
   "skills": [
     {
       "name": "api-contract",
       "description": "Maintain OpenAPI as contract between independent Python backend and TypeScript frontend",
-      "invocation": "contextual"
-    },
-    {
-      "name": "architecture-adr",
-      "description": "Record significant architectural decisions in product or workspace ADRs",
       "invocation": "contextual"
     },
     {
@@ -41,16 +36,6 @@
     {
       "name": "docker-deployment",
       "description": "Design Docker Compose local and VPS staging deployment for single-practice Django Quasar stack",
-      "invocation": "manual"
-    },
-    {
-      "name": "documentation",
-      "description": "Write concise product and workspace docs based on verified implementation",
-      "invocation": "contextual"
-    },
-    {
-      "name": "git-pr-workflow",
-      "description": "Prepare focused branch commit and pull request workflows for either independent repository",
       "invocation": "manual"
     },
     {
@@ -99,11 +84,6 @@
       "invocation": "contextual"
     },
     {
-      "name": "testing-strategy",
-      "description": "Design and execute Django pytest Quasar Vitest and cross-stack test gates",
-      "invocation": "contextual"
-    },
-    {
       "name": "ticket-finish",
       "description": "Close a local task after evidence-based tests, review and explicit outstanding risks",
       "invocation": "manual"
@@ -111,11 +91,6 @@
     {
       "name": "ticket-start",
       "description": "Create a local untracked task ticket and implementation checklist for Claude Code",
-      "invocation": "manual"
-    },
-    {
-      "name": "verification-before-completion",
-      "description": "Verify actual code edits with tests and show factual evidence before marking task complete",
       "invocation": "manual"
     },
     {

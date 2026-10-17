@@ -1,26 +1,18 @@
-# Источники и технические решения
+# Источники и решения MedicalPractice AI Workspace
 
-Источники, предоставленные пользователем:
-- `ReqDeck.zip`: разделение внешнего AI Workspace и вложенного `project/`, Claude Code policies/skills, GitHub Actions CI, release workflow, единый `packaging/product.json`, dry run.
-- `SimplexPass_261005.zip`: локальный ticket workflow, review/test/security subagents и строгие правила завершения задач.
-- `AI_GUIDELINES_Qt_CPP_QML_Project_Qt5_V4.md`: только общие принципы читаемого, поддерживаемого, минимально изменяемого кода; конкретные C++/Qt5 ограничения не переносились.
-- `Rules_for_Generating_DOCX_and_PDF_Technical_Documentation_v2_7.md`: при **отдельном** запросе создания документов соблюдать документные требования; универсальный Workspace не содержит закрытых внутренних reference-файлов.
+## История
 
-Ключевые отличия новой реализации:
-1. Claude Code **единственный** AI-инструмент; удалены адаптеры Codex/OpenCode и их дублированные skills.
-2. Внешний Workspace стал самостоятельным Git-репозиторием; `project/` — второй, полностью независимый репозиторий.
-3. Проектно-локальные задачи и генерации исключены из обоих Git.
-4. Stack profiles переключаются без изменения универсальных правил; для этого проекта готов шаблон Django+DRF+Wagtail+PostgreSQL / Vue3+Quasar+TypeScript.
-5. Встроены валидаторы структуры/skills/Git boundary и ограниченный Python PreToolUse guard (защита от типичных случайностей; не песочница безопасности).
-6. Workspace CI проходит без продуктов. Product CI самостоятельный.
-7. Программный код и сторонние skills из архивов **не копировались**. Skills, rules и hooks в этом ZIP созданы специально для новой задачи.
+Первоначальный Workspace был основан на разделении внешней AI-среды и вложенного Product Git (опыт ReqDeck), локальном ticket workflow и read-only review (опыт SimplexPass), правилах безопасной разработки Django/DRF/Wagtail/PostgreSQL + Vue 3/Quasar/TypeScript. Первоначально он был универсальным и предназначался только для Claude Code.
 
-Для выбора механики Claude Code сверено с официальными материалами:
-- https://code.claude.com/docs/en/skills
-- https://code.claude.com/docs/en/sub-agents
-- https://code.claude.com/docs/en/hooks
-- https://code.claude.com/docs/en/settings
+## Актуальное решение
 
-Версии SDK, Django, Wagtail, Node и Python намеренно не выдумывались: при фактическом bootstrap будут закреплены проверенные совместимые версии и lockfiles.
+1. **MedicalPractice — единственный целевой продукт**. Нет переключаемых профилей стека и обещаний универсальной среды для будущих проектов.
+2. **Два независимых Git-репозитория** сохраняются: внешний Workspace Git и внутренний Product Git в `project/`. Никаких submodules/subtrees.
+3. **`CLAUDE.md` — канонические общие инструкции**, `.claude/rules/*.md` — конкретные правила MedicalPractice. Stack-specific правила перенесены из старого `.claude/profiles/django-quasar/rules/` в общий набор.
+4. **`AGENTS.md` — минимальный адаптер Codex**, который предписывает открыть `CLAUDE.md` и применимые правила. Это не встроенный импорт: Codex автоматически читает `AGENTS.md`, но не обязан понимать Claude `@`-директивы.
+5. **Один каталог skills и reviewers** под `.claude/`. Codex может читать их как инструкции, но Claude hooks/subagents и автообнаружение skills не становятся автоматически функциями Codex.
+6. Избыточные skills объединены с правилами; оставшиеся 20 используются по задаче. Reviewer-агенты остаются read-only.
+7. Bootstrap создаёт локальные каталоги и безопасно мигрирует старые автоматически сгенерированные импорты `CLAUDE.local.md`, не изменяя Product Git.
+8. Workspace CI валидирует только Workspace; Product CI — независимо приложение. Секреты и реальные медицинские данные запрещены в обоих репозиториях.
 
-7. Стековые правила изолированы в `.claude/profiles/django-quasar/rules/` и активируются через игнорируемый `CLAUDE.local.md`. Общий `CLAUDE.md` не привязан к стеку.
+См. `README_RU.md`, `docs/REPOSITORY_POLICY_RU.md` и `docs/SKILLS_CATALOG_RU.md`. Для разработки Codex ориентируйся на `AGENTS.md` в корне Workspace.

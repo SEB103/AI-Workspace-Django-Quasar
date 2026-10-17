@@ -1,90 +1,80 @@
-# AI Workspace — Django / Quasar
+# MedicalPractice — AI Workspace для Claude Code и Codex
 
-Версионируемый **Claude Code-only** Workspace для разработки через два независимых Git-репозитория. Концепция рабочего места вдохновлена ReqDeck; ticket workflow и reviewer-проверки учитывают опыт SimplexPass.
+Специализированная среда разработки MedicalPractice. **Два независимых Git-репозитория**: Workspace хранит AI-инструкции, skills, reviewer-агентов и инструменты; вложенный `project/` содержит только приложение MedicalPractice. Workspace не является универсальным шаблоном для других стеков.
 
-## Обязательная структура
+## Локальная структура
 
 ```text
-AI-Workspace-Django-Quasar/
-├── .git/                     # Git A: только Workspace
-├── .gitignore                # Исключения и разрешённые README
-├── CLAUDE.md                 # Главные инструкции Claude Code
-├── .claude/                  # Skills, agents, rules, hooks, validators
-├── .github/                  # CI самого Workspace
-├── .vscode/                  # Переносимые настройки редактора
-├── docs/                     # Документация Workspace: полностью под Git
-│   └── README.md
-├── reference/                # Локальные входные материалы: под Git лишь README
-│   └── README.md
-├── generated/                # Локальные результаты: под Git лишь README
-│   ├── README.md
-│   ├── plans/README.md
-│   ├── tickets/README.md
-│   └── reports/README.md
-└── project/                  # Git B: Product; целиком игнорируется Git A
+AI-Workspace-Django-Quasar/        # Git A: Workspace
+├── .git/
+├── CLAUDE.md                      # Канонические общие инструкции
+├── AGENTS.md                      # Тонкий адаптер для Codex
+├── .claude/
+│   ├── rules/                     # Правила MedicalPractice (без профилей)
+│   ├── skills/                    # Один каталог skills для Claude/Codex
+│   ├── agents/                    # Claude reviewers / Codex review checklists
+│   ├── hooks/                     # Только Claude Code
+│   └── scripts/                   # Bootstrap, валидация, аудит
+├── docs/                           # Документация Workspace
+├── reference/                      # Локальные исходные материалы (игнорируются)
+├── generated/                      # Локальные планы/тикеты/отчёты (игнорируются)
+└── project/                        # Git B: MedicalPractice-Platform
+    ├── .git/
+    ├── backend/
+    ├── frontend/
+    ├── docs/
+    └── ...
 ```
 
-`docs/` — опубликованные справочные документы **самого Workspace**. `reference/` — локальные документы, архивы и исходные материалы, которыми Claude Code пользуется как контекстом. `generated/` — планы, тикеты, отчёты и любые дополнительные результаты, созданные в процессе работы. Их можно группировать в новые подпапки без изменения `.gitignore`.
+`project/` **полностью игнорируется** Workspace Git; вложенный Git не является submodule или subtree. Два репозитория имеют собственные ветки, коммиты, CI и `.gitignore`.
 
-Все README внутри `reference/` и `generated/` служат **версионируемыми инструкциями для пользователя**; любые другие файлы внутри этих каталогов игнорируются. `project/` — исключение: её нельзя включать в Workspace Git даже с `.gitkeep` или README, иначе появится двойное владение файлами. Поэтому ZIP содержит пустой `project/`, а `bootstrap.py` создаёт её после обычного `git clone`, если отсутствует. Собственный `README.md` есть в независимом Product Scaffold.
-
-## Первоначальная установка (Windows)
-
-После создания двух пустых репозиториев GitHub:
+## Первоначальная установка (Windows / PowerShell)
 
 ```powershell
 cd E:\AI
-git clone https://github.com/OWNER/AI-Workspace-Django-Quasar.git AI-Workspace-Django-Quasar
+git clone https://github.com/SEB103/AI-Workspace-Django-Quasar.git
 cd AI-Workspace-Django-Quasar
-
-# Сначала клонируем независимый Product Git внутрь Workspace.
-git clone https://github.com/OWNER/MedicalPractice-Platform.git project
-
-# Bootstrap безопасен: существующий project/ не изменяется.
+git clone https://github.com/SEB103/MedicalPractice-Platform.git project
 python .claude/scripts/bootstrap.py
 python .claude/scripts/validate_workspace.py --strict
 python -m unittest discover -s .claude/tests -p 'test_*.py' -v
 python .claude/scripts/repo_audit.py
-code .
-claude
 ```
 
-Если до клонирования Product запустить bootstrap, он создаст пустой `project/`. Тогда можно инициализировать в нём Product Git вручную (`git -C project init`) либо удалить **только действительно пустую** папку и выполнить `git clone ... project`. Никогда не удаляй папку с исходниками/историей продукта ради повторного клонирования.
+Если в Product Git Quasar пока находится в отдельной ветке, переключай **только** `project/` на нужную ветку после проверки локальных изменений:
 
-При распаковке двух ZIP извлеки **содержимое** первого в корень Workspace, а содержимое архива Product Scaffold — непосредственно в `project/`. Не создавай лишнего промежуточного каталога.
+```powershell
+git -C project status
+git -C project fetch origin
+git -C project switch feature/quasar-frontend
+```
 
-## Независимые Git-репозитории
+## Как запускать AI-инструменты
 
-- Workspace Git: инструкции, skills, agents, hooks, scripts, профили-шаблоны, CI, docs/ и структурные README.
-- Product Git (`project/.git`): Django backend, Quasar frontend, миграции, тесты, Compose, packaging, CI/release, продуктовая документация.
-- Не используем submodules/subtrees. Для Git-команд указывай корень явно (`git -C project ...`), при изменениях проверяй `git rev-parse --show-toplevel`.
-- `reference/`, `generated/`: Git A сохраняет лишь README; контент остаётся локальным. Устаревшие `task-context/` и `generated-docs/` также исключаются ради совместимости.
+**Claude Code:** из корня Workspace выполни `claude`. Он читает `CLAUDE.md` с прямыми импортами правил, обнаруживает `.claude/skills/` и `.claude/agents/`, использует PreToolUse hook. Отдельный stack profile и `CLAUDE.local.md` для активации правил больше не нужны.
 
-## Claude Code
+**Codex:** из того же корня Workspace запусти `codex`. Codex автоматически получает `AGENTS.md`. Этот файл предписывает прочитать `CLAUDE.md`, нужные `.claude/rules/*.md` и по задаче `.claude/skills/<name>/SKILL.md`. **Codex не интерпретирует `@`-импорты Claude автоматически**, не запускает Claude hooks и не регистрирует Claude reviewer-агентов как свои subagents. Reviewer-файлы можно использовать как read-only чеклисты.
 
-Claude Code запускается **из корня Workspace**, чтобы загрузить `.claude/` и `CLAUDE.md`.
+Не запускай Codex/Claude Code из `project/` для этой схемы: там намеренно нет AI-инструкций. Не копируй `.claude/`, `CLAUDE.md`, `AGENTS.md` и AI-артефакты в Product Git. Skills/agents **не дублируются** в `.agents/` или `.codex/` — их автоматическое обнаружение Codex не обещается.
 
-Bootstrap создаёт локальный профиль `CLAUDE.local.md` и `.claude/project-profile.local.yaml` при их отсутствии; они игнорируются. Django/Wagtail/DRF и Vue/Quasar/PostgreSQL правила активируются через профиль `.claude/profiles/django-quasar/`. Для нового стека сохрани универсальный Workspace и выбери другой профиль.
+## Обновление существующего Workspace
 
-Полезные skills: `/ticket-start`, `/ticket-finish`, `/plan-feature`, `/api-contract`, `/review-changes`, `/github-actions`, `/release-management`. Полный каталог — `docs/SKILLS_CATALOG_RU.md`.
+После `git pull` запусти `python .claude/scripts/bootstrap.py`. Если старый локальный `CLAUDE.local.md` содержит автоматически сгенерированные импорты удалённого профиля, bootstrap удалит **только устаревшие импорты**, сохранит остальные заметки и создаст `CLAUDE.local.md.bak` (игнорируемую резервную копию). Если файл уже не содержит устаревших импортов, он не изменяется. Старый `.claude/project-profile.local.yaml` не нужен и может остаться локально; bootstrap его не трогает.
+
+## Git и безопасность
+
+- `git -C . status` — Workspace, `git -C project status` — Product; проверяй корень, ветку и staged diff перед записью.
+- Product Git хранит код, тесты, миграции, CI, lockfiles и документацию продукта. Workspace Git — только AI-инфраструктуру.
+- Никаких реальных пациентов, медицинских записей, паролей и секретов в репозиториях, тестах, логах и AI-контексте.
+- Push, merge, теги, релизы, разрушительные операции и production deployment — только после явного разрешения.
+- Claude guard — дополнительная защита, **не** песочница и **не** защита Codex. Для обоих инструментов необходимы Git-аудит и тесты.
 
 ## Проверки
 
 ```powershell
-python .claude/scripts/bootstrap.py
 python .claude/scripts/validate_workspace.py --strict
 python -m unittest discover -s .claude/tests -p 'test_*.py' -v
-python .claude/scripts/repo_audit.py
-
-git -C . check-ignore -v project/
-git -C . check-ignore -v generated/tickets/example.md
-git -C . check-ignore -v reference/specification.pdf
+python .claude/scripts/repo_audit.py --workspace-only
 ```
 
-GitHub Actions Workspace выполняет свои проверки **без продуктового checkout**. Product GitHub Actions не зависит от Workspace.
-
-## Безопасность и зрелость
-
-Настоящие персональные/медицинские данные, пароли и токены нельзя помещать в Workspace, demos, тесты или CI. Gitignore не гарантирует безопасность при `git add -f`; CI и audit дополнительно проверяют tracked paths.
-
-Этот ZIP содержит только scaffold и правила: настоящие Django/Quasar приложения, production security review и deploy будут отдельными этапами. Git-repo/remotes и GitHub-релизы здесь не создаются.
+Workspace CI работает без Product checkout. Приложение собирается и тестируется отдельно через Product CI. Каталог навыков: `docs/SKILLS_CATALOG_RU.md`.

@@ -1,19 +1,18 @@
-# Каталог Claude Code skills
+# Навыки и reviewer-агенты MedicalPractice
 
-Skills размещены в `.claude/skills/<name>/SKILL.md`. **Manual** вызываются только пользователем через `/name`; остальные Claude может загрузить при релевантной задаче. Это локальные оригинальные playbooks: они не выполняют сетевые действия без отдельного решения.
+**Один канонический набор**: `.claude/skills/<name>/SKILL.md` и `.claude/agents/*.md`. Claude Code использует свои механизмы skills/subagents. Codex читает те же файлы по инструкции из `AGENTS.md`, **по мере необходимости**. Отдельных копий для Codex нет; автоматическое обнаружение и запуск Claude subagents в Codex не гарантируются.
 
-| Skill | Режим | Назначение |
+## Skills (20)
+
+| Skill | Режим Claude | Для чего |
 |---|---|---|
 | `api-contract` | По контексту | Maintain OpenAPI as contract between independent Python backend and TypeScript frontend |
-| `architecture-adr` | По контексту | Record significant architectural decisions in product or workspace ADRs |
 | `auth-permissions` | По контексту | Plan and review patient/staff login authorization approval and session flows |
 | `demo-fixtures` | По контексту | Create reproducible fictional demo practice users services and appointment fixtures |
 | `dependency-review` | По контексту | Review Django Python Quasar npm and GitHub Actions dependencies and supply-chain risk |
 | `django-domain` | По контексту | Implement Django domain models and services with transaction and migration discipline |
 | `django-rest-api` | По контексту | Design and implement DRF resource endpoints with safe permissions and schema |
 | `docker-deployment` | Manual | Design Docker Compose local and VPS staging deployment for single-practice Django Quasar stack |
-| `documentation` | По контексту | Write concise product and workspace docs based on verified implementation |
-| `git-pr-workflow` | Manual | Prepare focused branch commit and pull request workflows for either independent repository |
 | `github-actions` | По контексту | Develop diagnose and optimize two-repo GitHub Actions CI workflows |
 | `plan-feature` | Manual | Plan nontrivial full-stack features and acceptance tests before implementation |
 | `playwright-e2e` | По контексту | Create browser E2E flows for booking login approvals and content publication |
@@ -23,13 +22,15 @@ Skills размещены в `.claude/skills/<name>/SKILL.md`. **Manual** выз
 | `review-changes` | Manual | Perform structured security architecture test and product-boundary code review of diffs |
 | `security-privacy` | По контексту | Audit application security and EU/German medical privacy by threat modeling and tests |
 | `systematic-debugging` | По контексту | Investigate regressions in Django Quasar PostgreSQL CI or deployment with reproducible evidence |
-| `testing-strategy` | По контексту | Design and execute Django pytest Quasar Vitest and cross-stack test gates |
 | `ticket-finish` | Manual | Close a local task after evidence-based tests, review and explicit outstanding risks |
 | `ticket-start` | Manual | Create a local untracked task ticket and implementation checklist for Claude Code |
-| `verification-before-completion` | Manual | Verify actual code edits with tests and show factual evidence before marking task complete |
 | `wagtail-content` | По контексту | Build Wagtail editorial models admin workflow and headless content API for Quasar |
 | `workspace-maintenance` | Manual | Safely improve portable Claude Code rules skills hooks templates and validation |
 
-## Принцип умеренного расширения
+## Reviewers (6)
 
-Не устанавливать сотни сторонних skills ради количества. Новые навыки добавлять только под повторяемый сценарий, который действительно встречается в проекте. При добавлении обновить `manifest/skills.json`, протестировать `validate_workspace.py` и существующие hooks.
+`architecture-reviewer`, `backend-reviewer`, `frontend-reviewer`, `security-reviewer`, `test-reviewer`, `ci-release-reviewer` — read-only reviewer-инструкции. В Claude Code могут запускаться как специализированные агенты; в Codex используются как чеклисты, если нет отдельной совместимой механики запуска.
+
+## Принцип простоты
+
+Удалены пересекавшиеся playbooks `architecture-adr`, `documentation`, `git-pr-workflow`, `testing-strategy`, `verification-before-completion`: их требования уже закреплены в основных правилах и других skills. Новые skills добавлять только при повторяющейся реальной потребности, обновляя `manifest/skills.json` и тесты. Не создавать отдельный Codex-каталог копий.

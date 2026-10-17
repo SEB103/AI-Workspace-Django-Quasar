@@ -1,4 +1,4 @@
-name: Claude Workspace CI
+name: MedicalPractice AI Workspace CI
 on:
   push:
   pull_request:
@@ -12,9 +12,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate generic AI scaffold without a product checkout
+      - name: Validate MedicalPractice AI Workspace without Product checkout
         run: python .claude/scripts/validate_workspace.py --strict
-      - name: Run workspace guard tests
+      - name: Run workspace and guard tests
         run: python -m unittest discover -s .claude/tests -p 'test_*.py' -v
       - name: Confirm ignored local folders are not tracked
         run: |
