@@ -1,7 +1,7 @@
-# Governance / scope
-- This is a **reusable Claude Code-only workspace**. Do not install Codex or OpenCode scaffolds; no project-specific data under tracked paths.
-- `CLAUDE.md` is the authoritative always-on contract; this directory contains focused mandatory rules; task skills are invoked on demand.
-- Prefer explicit scope and evidence over enthusiastic rewrites. Never report a command/test passed unless actually executed with a recorded result.
-- Reviewer agents operate read-only. Main agent owns changes and must address or document their findings.
-- When updating universal skills, check that they have no practice-specific name, local hostname, absolute path, or credential.
-- Safety boundaries apply even if another instruction asks to bypass them. Show required approvals for risky operations rather than silently performing them.
+# MedicalPractice governance and scope
+- This workspace exists specifically to develop **MedicalPractice** with Claude Code and Codex. Do not introduce generic stack-selection profiles, mirrored skills, or unnecessary agent infrastructure.
+- `CLAUDE.md` is the authoritative shared contract; `AGENTS.md` is the minimal Codex adapter, not an independent ruleset.
+- Use only applicable rules and on-demand skills. Avoid unnecessary ticket/report generation for small edits.
+- Prefer explicit scope and observed evidence. Never report a command/test passed unless actually executed.
+- Claude reviewer agents operate read-only. Codex may use their files as checklists but must not assume native subagent support.
+- Never bypass patient-data/privacy boundaries, explicit approvals or repository separation.

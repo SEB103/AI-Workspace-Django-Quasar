@@ -1,16 +1,11 @@
 {
   "schema_version": 1,
   "canonical_root": ".claude/skills",
-  "total": 25,
+  "total": 22,
   "skills": [
     {
       "name": "api-contract",
       "description": "Maintain OpenAPI as contract between independent Python backend and TypeScript frontend",
-      "invocation": "contextual"
-    },
-    {
-      "name": "architecture-adr",
-      "description": "Record significant architectural decisions in product or workspace ADRs",
       "invocation": "contextual"
     },
     {
@@ -42,11 +37,6 @@
       "name": "docker-deployment",
       "description": "Design Docker Compose local and VPS staging deployment for single-practice Django Quasar stack",
       "invocation": "manual"
-    },
-    {
-      "name": "documentation",
-      "description": "Write concise product and workspace docs based on verified implementation",
-      "invocation": "contextual"
     },
     {
       "name": "git-pr-workflow",
@@ -96,11 +86,6 @@
     {
       "name": "systematic-debugging",
       "description": "Investigate regressions in Django Quasar PostgreSQL CI or deployment with reproducible evidence",
-      "invocation": "contextual"
-    },
-    {
-      "name": "testing-strategy",
-      "description": "Design and execute Django pytest Quasar Vitest and cross-stack test gates",
       "invocation": "contextual"
     },
     {

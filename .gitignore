@@ -1,5 +1,5 @@
 # ============================================================
-# Repository A: reusable Claude Code AI Workspace
+# Repository A: MedicalPractice AI Workspace (Claude Code + Codex)
 # Repository B (project/) is fully independent and never tracked here.
 # ============================================================
 
@@ -27,6 +27,7 @@
 
 # Local project- and machine-specific settings
 /CLAUDE.local.md
+/CLAUDE.local.md.bak*
 /.claude/project-profile.local.yaml
 /.claude/settings.local.json
 /.claude/local/

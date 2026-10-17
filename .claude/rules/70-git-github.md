@@ -1,9 +1,7 @@
-# Git and GitHub workflow
-- Two independent public repos: `.` AI Workspace and `project/` Product; no submodules; never allow Git to track nested repository from parent.
-- Before Git mutations check repository root and exact staged diff. Avoid broad `git add .` in mixed workspace; stage named files inside intended repo.
-- Branch -> PR -> CI -> review -> merge as default. GitHub Issues/Projects track product-relevant work; local AI tickets remain ignored.
-- Push, merge, tag creation, force operations, remote changes, deletion and publication require explicit user approval; forbid destructive reset/clean/force-push without specific consent.
-- GitHub Actions workflows live **inside** each correct repository: Workspace validates AI scaffold; Product validates code/build/security.
-- Dependabot separately monitors actions/Python/npm/Docker, according to actual product lockfiles and package ecosystems.
-- Avoid hardcoded credentials in YAML; prefer least-privilege `permissions`, GitHub Environments, approvals, OIDC where available, and immutable version/digest references.
-- No GitHub repository is created by bootstrap; add `origin` manually later.
+# Git and GitHub workflow — two independent repositories
+- `.` is the AI Workspace Git repository; `project/` is the Product Git repository. No submodules or subtrees; never stage Product files in Workspace Git.
+- Before Git mutations verify the intended repository root, current branch, status and exact staged diff. Stage explicit paths; avoid broad `git add .`.
+- Default to feature branch → PR → CI → review → merge. Never merge into `master` without explicit user authorization.
+- Push, PR merge, tag/release, deployment, remote changes, destructive history or database operations require explicit user approval; do not force-push or reset/clean destructively without specific consent.
+- GitHub Actions workflows live in the correct repository: Workspace validates its own instructions/hooks; Product validates application code and builds independently.
+- Never hardcode secrets in CI; prefer least-privilege permissions, protected environments and pinned dependencies.

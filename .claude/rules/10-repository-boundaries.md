@@ -1,9 +1,7 @@
-# Two-repository filesystem boundary
-- Workspace root `.` is Git Repository A; application root `project/` is Git Repository B, **physically nested but independent**.
-- Workspace `.gitignore` MUST have `/project/` anchored at the root. Product `.gitignore` MUST ignore AI artifacts without ignoring `.github/`, migrations, lockfiles or product docs.
-- No Git submodule/subtree, vendor copy of outer skills, or symlink pointing from product into workspace.
-- For workspace status/commit: `git -C . status`; for product: `git -C project status`. Avoid ambiguous bare Git commands inside shell scripts.
-- Before staging check `git -C . rev-parse --show-toplevel` and `git -C project rev-parse --show-toplevel` (when initialized). Check staged files with `git -C <root> diff --cached --name-only`.
-- `generated/` and `reference/` contain tracked **structural README.md files only**; all working content is ignored. Legacy `task-context/` and `generated-docs/` remain ignored. Docs needed by product consumers go in `project/docs/`, not AI working directories.
-- NEVER copy `.claude`, `CLAUDE.md`, `.agents`, AI ticket folders or generated reports into product. `gitignore` alone is not a security barrier.
-- Bootstrap must create `project/` when missing; Workspace validation/CI must not inspect product sources or require a Product checkout. Product must build standalone without Workspace.
+# MedicalPractice two-repository boundary
+- Workspace root `.` is Git A; Product root `project/` is Git B. They are physically nested but independent; `.gitignore` must contain anchored `/project/`.
+- Product Git owns application code, tests, lockfiles, migrations, release and product docs; Workspace Git owns shared AI instructions, Claude skills/reviewers/hooks and workspace docs. Product builds without the Workspace.
+- Never create a Git submodule/subtree, symlink product-to-workspace, or copy `.claude/`, `CLAUDE.md`, `AGENTS.md`, `.agents/`, AI tickets or generated reports into Product.
+- Use `git -C .` for Workspace and `git -C project` for Product. Check `rev-parse --show-toplevel`, status and staged paths before Git writes.
+- `reference/` and `generated/` contain tracked structural README files only; other contents are ignored. `task-context/` and `generated-docs/` remain ignored for backward compatibility.
+- Workspace validation and CI must work with no Product checkout. Bootstrap may create the empty `project/` directory, but must not initialize, replace or modify Product Git.

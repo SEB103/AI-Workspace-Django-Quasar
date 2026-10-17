@@ -1,16 +1,11 @@
-# Workspace documentation — `docs/`
+# MedicalPractice AI Workspace documentation
 
-**Versioned in Workspace Git.** This directory contains stable documentation for the reusable **Claude Code Workspace itself**: architecture, usage, repository policies, supported profile templates, skill catalog, validation instructions, and ADRs about the workspace tooling.
+Versioned in **Workspace Git**. This directory documents the AI development environment for MedicalPractice, not the Product application.
 
-## What belongs here
-- Reusable procedures and conventions for configuring or maintaining this workspace.
-- Descriptions of Claude Code rules, skills, agents, hooks, scripts, validators and release procedures.
-- Stable templates for universal documents; documented workspace changes and design decisions.
+- `REPOSITORY_POLICY_RU.md`: two independent Git repositories and tracked/ignored boundaries.
+- `SKILLS_CATALOG_RU.md`: canonical Claude skills; Codex can read relevant `SKILL.md` files on demand, without duplication.
+- `SOURCES_AND_DECISIONS_RU.md`: provenance and current decisions, including the Codex adapter.
+- `../CLAUDE.md`: canonical shared instructions and direct Claude rule imports.
+- `../AGENTS.md`: short Codex adapter; does not duplicate skills, reviewers or hooks.
 
-## What does NOT belong here
-- Documentation of the Django/Quasar application itself: put it in `project/docs/` in the **Product Git**.
-- Temporary plans, task records, investigations, AI chat summaries, generated PDF/DOCX or screenshots: put these in `generated/` (ignored).
-- Outside reference files used for context: put them in `reference/` (ignored except its `README.md`).
-- Secrets, passwords, real patient records, private client documents or personal data: do not place them in this public workspace.
-
-All ordinary files in this directory are tracked by Workspace Git. Keep published documentation free from specific project secrets and temporary operational notes.
+Product architecture, API and deployment documentation belong in `project/docs/` under Product Git. Temporary AI plans/reports belong in ignored `generated/`, source material in ignored `reference/`. Never commit secrets or real patient data.
