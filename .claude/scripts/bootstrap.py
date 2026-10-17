@@ -23,10 +23,19 @@ def migrate_legacy_local_imports(local_claude: Path) -> bool:
     new = re.sub(r'\n{3,}', '\n\n', new).strip() + '\n'
     if not new.strip():
         new = '# Local machine-specific Claude instructions (optional).\n'
+    # Never replace a previous backup. Reserve the next unused path atomically,
+    # even when an earlier migration has already created CLAUDE.local.md.bak.
     backup = local_claude.with_name('CLAUDE.local.md.bak')
-    if backup.exists():
-        raise FileExistsError('Refusing to overwrite existing migration backup: ' + str(backup))
-    backup.write_text(old, encoding='utf-8')
+    for number in range(10000):
+        candidate = backup if number == 0 else backup.with_name(backup.name + '.' + str(number))
+        try:
+            with candidate.open('x', encoding='utf-8') as stream:
+                stream.write(old)
+            break
+        except FileExistsError:
+            continue
+    else:
+        raise RuntimeError('No free CLAUDE.local.md backup path')
     local_claude.write_text(new, encoding='utf-8')
     return True
 
@@ -38,7 +47,7 @@ def bootstrap(root: Path = ROOT) -> None:
         print('Directory ready:', rel)
     local = root / 'CLAUDE.local.md'
     if migrate_legacy_local_imports(local):
-        print('Migrated obsolete stack imports in CLAUDE.local.md; backup: CLAUDE.local.md.bak')
+        print('Migrated obsolete stack imports in CLAUDE.local.md; previous content backed up safely')
     elif local.exists():
         print('Kept existing CLAUDE.local.md')
     print('Bootstrap OK. Product repository remains untouched.')

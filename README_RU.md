@@ -59,7 +59,7 @@ git -C project switch feature/quasar-frontend
 
 ## Обновление существующего Workspace
 
-После `git pull` запусти `python .claude/scripts/bootstrap.py`. Если старый локальный `CLAUDE.local.md` содержит автоматически сгенерированные импорты удалённого профиля, bootstrap удалит **только устаревшие импорты**, сохранит остальные заметки и создаст `CLAUDE.local.md.bak` (игнорируемую резервную копию). Если файл уже не содержит устаревших импортов, он не изменяется. Старый `.claude/project-profile.local.yaml` не нужен и может остаться локально; bootstrap его не трогает.
+После `git pull` запусти `python .claude/scripts/bootstrap.py`. Если старый локальный `CLAUDE.local.md` содержит автоматически сгенерированные импорты удалённого профиля, bootstrap удалит **только устаревшие импорты**, сохранит остальные заметки и создаст `CLAUDE.local.md.bak` (игнорируемую резервную копию). Если она уже существует, создаётся отдельная `.bak.1`, `.bak.2` и так далее, без перезаписи предыдущих копий. Если файл уже не содержит устаревших импортов, он не изменяется. Старый `.claude/project-profile.local.yaml` не нужен и может остаться локально; bootstrap его не трогает.
 
 ## Git и безопасность
 
@@ -76,5 +76,7 @@ python .claude/scripts/validate_workspace.py --strict
 python -m unittest discover -s .claude/tests -p 'test_*.py' -v
 python .claude/scripts/repo_audit.py --workspace-only
 ```
+
+Перед Git/PR-действиями используй `.claude/skills/git-pr-workflow/SKILL.md`, перед объявлением задачи завершённой — `.claude/skills/verification-before-completion/SKILL.md`. Оба — ручные Claude skills; Codex может прочитать их как чеклисты, без автоматической интеграции.
 
 Workspace CI работает без Product checkout. Приложение собирается и тестируется отдельно через Product CI. Каталог навыков: `docs/SKILLS_CATALOG_RU.md`.

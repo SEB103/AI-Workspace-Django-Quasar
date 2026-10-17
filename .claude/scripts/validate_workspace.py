@@ -18,13 +18,27 @@ REQUIRED = [
     'generated/plans/README.md', 'generated/tickets/README.md',
     'generated/reports/README.md', '.github/workflows/workspace-ci.yml',
 ]
+# Preserve essential MedicalPractice protections, while allowing additional focused rules.
+MANDATORY_RULES = {
+    '00-governance.md',
+    '10-repository-boundaries.md',
+    '20-backend-python-django.md',
+    '30-frontend-typescript-quasar.md',
+    '40-api-contract.md',
+    '50-testing-quality.md',
+    '60-security-privacy.md',
+    '70-git-github.md',
+    '80-release-deployment.md',
+    '90-documentation-and-review.md',
+}
+
 IGNORE_RULES = [
     '/project/', '/reference/**', '!/reference/README.md',
     '/generated/**', '!/generated/README.md',
     '!/generated/plans/', '!/generated/plans/README.md',
     '!/generated/tickets/', '!/generated/tickets/README.md',
     '!/generated/reports/', '!/generated/reports/README.md',
-    '/task-context/', '/generated-docs/',
+    '/task-context/', '/generated-docs/', '/CLAUDE.local.md.bak*',
 ]
 
 
@@ -52,8 +66,14 @@ def validate() -> list[str]:
     for path in rules:
         if '@.claude/rules/' + path.name not in claude:
             errors.append('Missing CLAUDE.md import ' + path.name)
-    if len(rules) != 10:
-        errors.append('Expected 10 MedicalPractice rule files, got ' + str(len(rules)))
+    existing_rules = {path.name for path in rules}
+    for name in sorted(MANDATORY_RULES - existing_rules):
+        errors.append('Missing mandatory MedicalPractice rule: ' + name)
+    for line in claude.splitlines():
+        if line.startswith('@.claude/rules/'):
+            target = ROOT / line[1:]
+            if not target.is_file():
+                errors.append('CLAUDE.md imports missing rule: ' + line[1:])
     if any(p.is_file() for p in (ROOT / '.claude/profiles').rglob('*')):
         errors.append('Obsolete generic stack profile files are still present')
     settings = json.loads((ROOT / '.claude/settings.json').read_text(encoding='utf-8'))
@@ -86,6 +106,9 @@ def validate() -> list[str]:
         errors.append('Skill count mismatch')
     if seen != manifest_data:
         errors.append('Skill names/invocation mismatch')
+    for essential in ('git-pr-workflow', 'verification-before-completion'):
+        if essential not in seen or seen.get(essential) is not True:
+            errors.append('Missing mandatory manual workflow skill: ' + essential)
     for path in sorted((ROOT / '.claude/agents').glob('*.md')):
         data = path.read_text(encoding='utf-8')
         for literal in ('name: ' + path.stem, 'tools: Read, Grep, Glob'):

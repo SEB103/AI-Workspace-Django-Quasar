@@ -2,7 +2,7 @@
 
 **Один канонический набор**: `.claude/skills/<name>/SKILL.md` и `.claude/agents/*.md`. Claude Code использует свои механизмы skills/subagents. Codex читает те же файлы по инструкции из `AGENTS.md`, **по мере необходимости**. Отдельных копий для Codex нет; автоматическое обнаружение и запуск Claude subagents в Codex не гарантируются.
 
-## Skills (20)
+## Skills (22)
 
 | Skill | Режим Claude | Для чего |
 |---|---|---|
@@ -13,6 +13,7 @@
 | `django-domain` | По контексту | Implement Django domain models and services with transaction and migration discipline |
 | `django-rest-api` | По контексту | Design and implement DRF resource endpoints with safe permissions and schema |
 | `docker-deployment` | Manual | Design Docker Compose local and VPS staging deployment for single-practice Django Quasar stack |
+| `git-pr-workflow` | Manual | Prepare focused branch commit and pull request workflows for either independent repository |
 | `github-actions` | По контексту | Develop diagnose and optimize two-repo GitHub Actions CI workflows |
 | `plan-feature` | Manual | Plan nontrivial full-stack features and acceptance tests before implementation |
 | `playwright-e2e` | По контексту | Create browser E2E flows for booking login approvals and content publication |
@@ -24,6 +25,7 @@
 | `systematic-debugging` | По контексту | Investigate regressions in Django Quasar PostgreSQL CI or deployment with reproducible evidence |
 | `ticket-finish` | Manual | Close a local task after evidence-based tests, review and explicit outstanding risks |
 | `ticket-start` | Manual | Create a local untracked task ticket and implementation checklist for Claude Code |
+| `verification-before-completion` | Manual | Verify actual code edits with tests and show factual evidence before marking task complete |
 | `wagtail-content` | По контексту | Build Wagtail editorial models admin workflow and headless content API for Quasar |
 | `workspace-maintenance` | Manual | Safely improve portable Claude Code rules skills hooks templates and validation |
 
@@ -33,4 +35,4 @@
 
 ## Принцип простоты
 
-Удалены пересекавшиеся playbooks `architecture-adr`, `documentation`, `git-pr-workflow`, `testing-strategy`, `verification-before-completion`: их требования уже закреплены в основных правилах и других skills. Новые skills добавлять только при повторяющейся реальной потребности, обновляя `manifest/skills.json` и тесты. Не создавать отдельный Codex-каталог копий.
+Убраны только дублирующие playbooks `architecture-adr`, `documentation`, `testing-strategy`. Процедурные `git-pr-workflow` и `verification-before-completion` сохранены: они содержат практические контрольные списки перед Git/PR-операциями и завершением задач. Новые skills добавлять только при повторяющейся реальной потребности, обновляя `manifest/skills.json` и тесты. Не создавать отдельный Codex-каталог копий.

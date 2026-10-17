@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "canonical_root": ".claude/skills",
-  "total": 20,
+  "total": 22,
   "skills": [
     {
       "name": "api-contract",
@@ -36,6 +36,11 @@
     {
       "name": "docker-deployment",
       "description": "Design Docker Compose local and VPS staging deployment for single-practice Django Quasar stack",
+      "invocation": "manual"
+    },
+    {
+      "name": "git-pr-workflow",
+      "description": "Prepare focused branch commit and pull request workflows for either independent repository",
       "invocation": "manual"
     },
     {
@@ -91,6 +96,11 @@
     {
       "name": "ticket-start",
       "description": "Create a local untracked task ticket and implementation checklist for Claude Code",
+      "invocation": "manual"
+    },
+    {
+      "name": "verification-before-completion",
+      "description": "Verify actual code edits with tests and show factual evidence before marking task complete",
       "invocation": "manual"
     },
     {
