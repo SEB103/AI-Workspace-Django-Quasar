@@ -1,0 +1,9 @@
+# Keep LF in the working tree on every OS so MANIFEST_SHA256.txt checksums match
+# regardless of the local core.autocrlf setting.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.pdf binary
+*.zip binary

@@ -41,13 +41,15 @@ python -m unittest discover -s .claude/tests -p 'test_*.py' -v
 python .claude/scripts/repo_audit.py
 ```
 
-Если в Product Git Quasar пока находится в отдельной ветке, переключай **только** `project/` на нужную ветку после проверки локальных изменений:
+Backend и Quasar frontend уже находятся в `master` Product-репозитория. Перед работой обновляй **только** `project/` после проверки локальных изменений:
 
 ```powershell
 git -C project status
-git -C project fetch origin
-git -C project switch feature/quasar-frontend
+git -C project switch master
+git -C project pull --ff-only origin master
 ```
+
+Для PR и проверки CI из терминала установи GitHub CLI (`winget install --id GitHub.cli -e --source winget`) и выполни `gh auth login` (GitHub.com → SSH → Login with a web browser).
 
 ## Как запускать AI-инструменты
 
@@ -67,7 +69,7 @@ git -C project switch feature/quasar-frontend
 - Product Git хранит код, тесты, миграции, CI, lockfiles и документацию продукта. Workspace Git — только AI-инфраструктуру.
 - Никаких реальных пациентов, медицинских записей, паролей и секретов в репозиториях, тестах, логах и AI-контексте.
 - Push, merge, теги, релизы, разрушительные операции и production deployment — только после явного разрешения.
-- Claude guard — дополнительная защита, **не** песочница и **не** защита Codex. Для обоих инструментов необходимы Git-аудит и тесты.
+- Claude guard — дополнительная защита, **не** песочница и **не** защита Codex. Он запрещает разрушительные команды (force-push, `reset --hard`, `rm -rf` и т. п.) и запрашивает подтверждение пользователя для merge PR, push в `master`/`main`, тегов, релизов, удаления веток и отката рабочих изменений. Для обоих инструментов необходимы Git-аудит и тесты.
 
 ## Проверки
 

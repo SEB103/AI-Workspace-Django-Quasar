@@ -47,10 +47,8 @@
 *.bak
 *.swp
 
-# IDE machine-specific state (share only portable settings)
-/.vscode/*
-!/.vscode/settings.json
-!/.vscode/extensions.json
+# IDE settings: VS Code is opened on project/, so the Workspace root keeps none
+/.vscode/
 .idea/
 
 # Claude Code transient worktrees/caches
