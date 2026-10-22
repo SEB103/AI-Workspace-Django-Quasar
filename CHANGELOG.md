@@ -3,6 +3,11 @@
 ## [Unreleased]
 - Added `.gitattributes` forcing LF line endings so `MANIFEST_SHA256.txt` checksums and workspace tests pass on Windows checkouts with `core.autocrlf=true`.
 - Removed root `.vscode/` settings from Workspace Git (VS Code is used from `project/`); the root `.vscode/` is now fully ignored.
+- Guard hook: new `ask` decisions for PR merge, push to `master`/`main` (explicit refspec or bare push from a checked-out protected branch), tag push, GitHub release, remote/forced branch deletion and discarding working-tree changes; closed `rm -fr`/`rm -r -f`/`--recursive --force` and `+refspec` force-push bypasses; extended guard tests.
+- `CLAUDE.md`: globally installed plugins (superpowers) save specs/plans under ignored `generated/plans/`, never auto-commit; workspace skills win on name clashes.
+- `70-git-github` rule and `git-pr-workflow`: no AI attribution in commits/PRs; GitHub CLI command checklist.
+- Workspace CI: actions pinned by commit SHA (`checkout` v7.0.1, `setup-python` v7.0.0, Node 24), push trigger limited to `master`; Dependabot for GitHub Actions.
+- `review-changes` lists `architecture-reviewer`; `settings.local.json.example` is now a valid settings skeleton; README_RU updated (Quasar already in Product `master`, GitHub CLI setup, guard behaviour); skills catalog documents global plugin precedence.
 
 ## [0.3.1] — Restore essential workflows and harden bootstrap migration
 - Restored `git-pr-workflow` and `verification-before-completion` with their original manual-invocation safeguards (22 skills in one canonical directory).

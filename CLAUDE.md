@@ -16,6 +16,7 @@ This is the **MedicalPractice-specific** development workspace for Claude Code a
 - Enforce authentication, object-level authorization, appointment consistency and privacy on the backend. Frontend validation is only a UX aid.
 - Keep product decisions and API docs in `project/docs/`; workspace operational documentation in `docs/`; local AI plans/tickets/reports in ignored `generated/`; input reference material in ignored `reference/`.
 - For substantial work, plan acceptance criteria, run relevant tests and report exact results, remaining risks and unverified items. Reviewer agents are read-only; the implementing agent owns changes.
+- Globally installed plugins (e.g. superpowers) follow these rules: save their specs/plans/design docs under ignored `generated/plans/` (never `docs/superpowers/` in either repository) and never commit them automatically. Where a plugin skill shares a name with a workspace skill (`systematic-debugging`, `verification-before-completion`), the workspace version and these rules take precedence.
 
 ## MedicalPractice engineering rules (Claude Code imports)
 @.claude/rules/00-governance.md

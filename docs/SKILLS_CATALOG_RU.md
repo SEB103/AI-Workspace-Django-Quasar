@@ -33,6 +33,10 @@
 
 `architecture-reviewer`, `backend-reviewer`, `frontend-reviewer`, `security-reviewer`, `test-reviewer`, `ci-release-reviewer` — read-only reviewer-инструкции. В Claude Code могут запускаться как специализированные агенты; в Codex используются как чеклисты, если нет отдельной совместимой механики запуска.
 
+## Глобальные плагины (например, superpowers)
+
+Плагины, установленные у пользователя глобально, не входят в Workspace, но работают и в этой сессии. Они подчиняются `CLAUDE.md`: спецификации и планы сохраняются в игнорируемый `generated/plans/` (не в `docs/superpowers/`) и не коммитятся автоматически. При совпадении имён (`systematic-debugging`, `verification-before-completion`) приоритет у skill Workspace.
+
 ## Принцип простоты
 
 Убраны только дублирующие playbooks `architecture-adr`, `documentation`, `testing-strategy`. Процедурные `git-pr-workflow` и `verification-before-completion` сохранены: они содержат практические контрольные списки перед Git/PR-операциями и завершением задач. Новые skills добавлять только при повторяющейся реальной потребности, обновляя `manifest/skills.json` и тесты. Не создавать отдельный Codex-каталог копий.

@@ -1,0 +1,7 @@
+# Keep SHA-pinned GitHub Actions of the Workspace CI up to date.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
