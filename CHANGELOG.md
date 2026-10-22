@@ -1,5 +1,9 @@
 # Workspace changelog
 
+## [Unreleased]
+- Added `.gitattributes` forcing LF line endings so `MANIFEST_SHA256.txt` checksums and workspace tests pass on Windows checkouts with `core.autocrlf=true`.
+- Removed root `.vscode/` settings from Workspace Git (VS Code is used from `project/`); the root `.vscode/` is now fully ignored.
+
 ## [0.3.1] — Restore essential workflows and harden bootstrap migration
 - Restored `git-pr-workflow` and `verification-before-completion` with their original manual-invocation safeguards (22 skills in one canonical directory).
 - Bootstrap now keeps existing `CLAUDE.local.md.bak` files, allocating numbered backups for further migrations; migration regression tests added.
